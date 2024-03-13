@@ -1,6 +1,3 @@
-
-
-
 cd $env:USERPROFILE\Desktop;
 New-Item -ItemType Directory -Name "NewFolder";
 

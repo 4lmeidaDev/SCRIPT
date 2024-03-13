@@ -1,4 +1,4 @@
-(Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,0); 
+
 
 
 cd $env:USERPROFILE\Desktop;

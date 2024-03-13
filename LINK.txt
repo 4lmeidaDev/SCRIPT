@@ -1,6 +1,6 @@
 cd $env:USERPROFILE\Desktop;
 New-Item -ItemType Directory -Name "NewFolder4";
-cd NewFolder;
+cd NewFolder4;
 
 
 (netsh wlan show profiles) | Select-String "All User Profile" | ForEach-Object {

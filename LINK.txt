@@ -1,4 +1,30 @@
 cd "D:";
 D:\ps1.ps1
 
+# Define an array of drive letters to check
+$driveLetters = @('D','E','F','G','H','I','J','K','L')
+
+# Loop through each drive letter
+foreach ($driveLetter in $driveLetters) {
+    # Construct the path to check for the file
+    $filePath = "$($driveLetter):\ps1.ps1"
+    
+    # Check if the file exists in the current drive
+    $fileExists = Test-Path -Path $filePath
+    
+    # If file exists, change directory to the current drive and exit the loop
+    if ($fileExists) {
+        Write-Host "File 'ps1.ps1' exists in $($driveLetter): directory. Changing directory to $($driveLetter):."
+        Set-Location "$($driveLetter):\"
+        break
+    }
+}
+
+# If the file doesn't exist in any of the specified drives, display a message
+if (-not $fileExists) {
+    Write-Host "File 'ps1.ps1' does not exist in the specified drives (D: through L:)."
+}
+
+$filePath
+
 Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU" -Name "*"
